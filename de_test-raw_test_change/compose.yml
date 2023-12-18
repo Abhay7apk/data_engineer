@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test_db
+  api:
+    build: ./path_to_flask_api/
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+    - FLASK_ENV=development
+    - FLASK_APP=app.py
+  frontend:
+    build: ./path_to_react_frontend/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
